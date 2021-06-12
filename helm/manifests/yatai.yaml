@@ -1,0 +1,82 @@
+---
+# Source: YataiService/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: yatai-service-account
+  labels:
+    app: yatai-service
+---
+# Source: YataiService/templates/yatai-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: yatai-service
+  labels:
+    app: yatai-service
+spec:
+  type: LoadBalancer
+  ports:
+  - name: web
+    port: 3000
+    targetPort: 3000
+  - name: grpc
+    port: 50051
+    targetPort: 50051
+  selector:
+    app: yatai-service
+---
+# Source: YataiService/templates/yatai-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yatai-service
+  labels:
+    app: yatai-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yatai-service
+  template:
+    metadata:
+      labels:
+        app: yatai-service
+    spec:
+      imagePullSecrets:
+        []
+      serviceAccountName: yatai-service-account
+      securityContext:
+        {}
+      containers:
+        - name: yatai-service
+          securityContext:
+            null
+          image: "bentoml/yatai-service:0.8.5"
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 50051
+          - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          args:
+            
+            
+          resources:
+            {}
+      nodeSelector:
+        {}
+      affinity:
+        {}
+      tolerations:
+        []

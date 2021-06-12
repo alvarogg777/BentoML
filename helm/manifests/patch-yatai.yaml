@@ -16,3 +16,6 @@ spec:
     spec:
       imagePullSecrets:
         - name: regcred
+      containers:
+        - name: yatai-service
+          image: alvarogg777/yatai-service:0.12.1

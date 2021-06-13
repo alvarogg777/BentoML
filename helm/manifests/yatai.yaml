@@ -70,8 +70,39 @@ spec:
             initialDelaySeconds: 3
             periodSeconds: 5
           args:
-            
-            
+            {{ if .Values.db_url -}}
+            # - "--db-url={{ .Values.db_url }}"
+            - "--db-url=$BACKEND_STORE_URI"
+            {{- end }}
+            {{ if .Values.repo_base_url -}}
+            # - "--repo-base-url={{ .Values.repo_base_url}}"
+            - "--repo-base-url=$DEFAULT_ARTIFACT_ROOT --s3-endpoint-url=$MLFLOW_S3_ENDPOINT_URL"
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        env:
+          - name: MINIO_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: ml-secrets
+                key: MINIO_ACCESS_KEY
+          - name: MINIO_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: ml-secrets
+                key: MINIO_SECRET_KEY
+          - name: DEFAULT_ARTIFACT_ROOT
+            value: s3://yatai/artifacts
+          - name: MLFLOW_S3_ENDPOINT_URL
+            valueFrom:
+              secretKeyRef:
+                name: storage-secrets
+                key: MINIO_ENDPOINT
+          - name: BACKEND_STORE_URI
+            valueFrom:
+              secretKeyRef:
+                name: storage-secrets
+                key: backend_store_uri
           resources:
             {}
       nodeSelector:

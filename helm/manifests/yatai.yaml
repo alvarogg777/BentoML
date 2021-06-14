@@ -65,9 +65,9 @@ spec:
               port: 3000
             initialDelaySeconds: 3
             periodSeconds: 5
-          args:
-            - "--db-url=postgresql://mlflow:mlflow@postgres.storage-system.svc.cluster.local"
-            # - "--repo-base-url=minio.storage-system.svc.cluster.local --s3-endpoint-url=s3://yatai/artifacts"
+          #args: []
+          #   - "--db-url=postgresql://mlflow:mlflow@postgres.storage-system.svc.cluster.local" 
+          #   - "--repo-base-url=minio.storage-system.svc.cluster.local --s3-endpoint-url=s3://yatai/artifacts"
           env:
             - name: MINIO_ACCESS_KEY
               valueFrom:

@@ -46,29 +46,6 @@ spec:
       imagePullSecrets:
         - name: regcred
       serviceAccountName: yatai-service-account
-      env:
-        - name: MINIO_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: storage-secrets
-              key: MINIO_ACCESS_KEY
-        - name: MINIO_SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: storage-secrets
-              key: MINIO_SECRET_KEY
-        - name: DEFAULT_ARTIFACT_ROOT
-          value: s3://yatai/artifacts
-        - name: MLFLOW_S3_ENDPOINT_URL
-          valueFrom:
-            secretKeyRef:
-              name: storage-secrets
-              key: MINIO_ENDPOINT
-        - name: BACKEND_STORE_URI
-          valueFrom:
-            secretKeyRef:
-              name: storage-secrets
-              key: backend_store_uri
       containers:
         - name: yatai-service
           image: "bentoml/yatai-service:0.8.5"
@@ -91,4 +68,26 @@ spec:
           args:
             - "--db-url=$BACKEND_STORE_URI"
             - "--repo-base-url=$DEFAULT_ARTIFACT_ROOT --s3-endpoint-url=$MLFLOW_S3_ENDPOINT_URL"
-
+          env:
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secrets
+                  key: MINIO_ACCESS_KEY
+            - name: MINIO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secrets
+                  key: MINIO_SECRET_KEY
+            - name: DEFAULT_ARTIFACT_ROOT
+              value: s3://yatai/artifacts
+            - name: MLFLOW_S3_ENDPOINT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secrets
+                  key: MINIO_ENDPOINT
+            - name: BACKEND_STORE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secrets
+                  key: backend_store_uri

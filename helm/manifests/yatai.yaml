@@ -67,7 +67,7 @@ spec:
             periodSeconds: 5
           args:
             - "--db-url=$(BACKEND_STORE_URI)"
-            - "--repo-base-url=$DEFAULT_ARTIFACT_ROOT --s3-endpoint-url=$(S3_ENDPOINT_URL)"
+            - "--repo-base-url=$(DEFAULT_ARTIFACT_ROOT) --s3-endpoint-url=$(S3_ENDPOINT_URL)"
           env:
             - name: MINIO_ACCESS_KEY
               valueFrom:

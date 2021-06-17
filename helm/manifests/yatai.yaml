@@ -66,9 +66,8 @@ spec:
             initialDelaySeconds: 3
             periodSeconds: 5
           args:
-             - "--db-url=$(BACKEND_STORE_URI)" 
-             #- "--repo-base-url https://$(MINIO_ENDPOINT_URL)"
-             #- "--s3-endpoint-url $(YATAI_BUCKET)"
+            - "--db-url=$(BACKEND_STORE_URI)"
+            - "--repo-base-url=$DEFAULT_ARTIFACT_ROOT --s3-endpoint-url=$(S3_ENDPOINT_URL)"
           env:
             - name: MINIO_ACCESS_KEY
               valueFrom:
@@ -80,15 +79,15 @@ spec:
                 secretKeyRef:
                   name: storage-secrets
                   key: MINIO_SECRET_KEY
-            - name: YATAI_BUCKET
-              value: s3://yatai/bucket
-            - name: MINIO_ENDPOINT_URL
+            - name: DEFAULT_ARTIFACT_ROOT
+              value: s3://bentoml/artifacts
+            - name: S3_ENDPOINT_URL
               valueFrom:
                 secretKeyRef:
                   name: storage-secrets
-                  key: MINIO_ENDPOINT
+                  key: S3_ENDPOINT_URL
             - name: BACKEND_STORE_URI
               valueFrom:
                 secretKeyRef:
                   name: storage-secrets
-                  key: backend_store_uri
+                  key: MLFLOW_DB_URI

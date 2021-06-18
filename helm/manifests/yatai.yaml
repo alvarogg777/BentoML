@@ -15,7 +15,7 @@ metadata:
   labels:
     app: yatai-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - name: web
     port: 3000
@@ -57,7 +57,7 @@ spec:
       serviceAccountName: yatai-service-account
       containers:
         - name: yatai-service
-          image: "bentoml/yatai-service:0.8.5"
+          image: alvarogg777/arm64v8:nvidia-l4t-base-32.5 # "bentoml/yatai-service:0.8.5"
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 50051
@@ -79,7 +79,8 @@ spec:
           args:
             - "yatai-service-start"
             - "--db-url=$(BACKEND_STORE_URI)"
-            - "--repo-base-url=$(DEFAULT_ARTIFACT_ROOT)"
+            - "--repository-type=S3"
+            - "--s3-url=$(DEFAULT_ARTIFACT_ROOT)"
             - "--s3-endpoint-url=$(S3_ENDPOINT_URL)"
           env:
             - name: MINIO_ACCESS_KEY

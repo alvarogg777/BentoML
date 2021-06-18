@@ -43,6 +43,15 @@ spec:
       labels:
         app: yatai-service
     spec:
+      affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                  - key: "kubernetes.io/hostname"
+                    operator: NotIn
+                    values:
+                      - kmaster
       imagePullSecrets:
         - name: regcred
       serviceAccountName: yatai-service-account
@@ -65,9 +74,13 @@ spec:
               port: 3000
             initialDelaySeconds: 3
             periodSeconds: 5
+          command:
+            - "/usr/local/bin/bentoml"
           args:
+            - "yatai-service-start"
             - "--db-url=$(BACKEND_STORE_URI)"
-            - "--repo-base-url=$(DEFAULT_ARTIFACT_ROOT) --s3-endpoint-url=$(S3_ENDPOINT_URL)"
+            - "--repo-base-url=$(DEFAULT_ARTIFACT_ROOT)"
+            - "--s3-endpoint-url=$(S3_ENDPOINT_URL)"
           env:
             - name: MINIO_ACCESS_KEY
               valueFrom:

@@ -26,6 +26,27 @@ spec:
   selector:
     app: yatai-service
 ---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-db
+spec:
+  template:
+    metadata:
+      name:  init-db
+      labels:
+        app: init-postgresdb
+    spec:
+      containers:
+      - image: "docker.io/postgresql:13.3"
+        name: init-db
+        command: ["createdb"]
+        args: ["-h","$(POSTGRES_HOST)", "-U", "$(POSTGRES_USER)", "bentoml" ]
+        envFrom:
+          - secretRef:
+              name: storage-secrets
+      restartPolicy: OnFailure
+---
 # Source: YataiService/templates/yatai-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -78,30 +99,10 @@ spec:
             - "/usr/local/bin/bentoml"
           args:
             - "yatai-service-start"
-            - "--db-url=$(BACKEND_STORE_URI)"
+            - "--db-url=$(BENTOML_DB_URI)"
             - "--repository-type=S3"
-            - "--s3-url=$(DEFAULT_ARTIFACT_ROOT)"
+            - "--s3-url=s3://bentoml/artifacts"
             - "--s3-endpoint-url=$(S3_ENDPOINT_URL)"
-          env:
-            - name: MINIO_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: storage-secrets
-                  key: MINIO_ACCESS_KEY
-            - name: MINIO_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: storage-secrets
-                  key: MINIO_SECRET_KEY
-            - name: DEFAULT_ARTIFACT_ROOT
-              value: s3://bentoml/artifacts
-            - name: S3_ENDPOINT_URL
-              valueFrom:
-                secretKeyRef:
-                  name: storage-secrets
-                  key: S3_ENDPOINT_URL
-            - name: BACKEND_STORE_URI
-              valueFrom:
-                secretKeyRef:
-                  name: storage-secrets
-                  key: MLFLOW_DB_URI
+          envFrom:
+            - secretRef:
+                name: storage-secrets

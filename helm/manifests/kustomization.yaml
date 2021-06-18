@@ -7,5 +7,5 @@ resources:
 - https://raw.githubusercontent.com/alvarogg777/helm-mlflow/patch-1.13.1/manifests/mlflow.yaml
 patchesStrategicMerge:
 - patch-yatai.yaml
-namespace: ml-system
+namespace: ml
 

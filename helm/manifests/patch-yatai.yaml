@@ -18,4 +18,4 @@ spec:
         - name: regcred
       containers:
         - name: yatai-service
-          image: alvarogg777/yatai-service:0.12.1
+          image: alvarogg777/arm64v8:nvidia-l4t-base-32.5

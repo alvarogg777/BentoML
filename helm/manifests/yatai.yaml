@@ -123,6 +123,18 @@ spec:
             - "--db-url=$(BENTOML_DB_URI)"
             - "--s3-url=s3://bentoml/artifacts"
             - "--s3-endpoint-url=$(S3_ENDPOINT_URL)"
-          envFrom:
-            - secretRef:
-                name: storage-secrets
+          #envFrom:
+          #  - secretRef:
+          #      name: storage-secrets
+          env:
+          - name: BENTOML_DB_URI
+            valueFrom:
+                secretKeyRef:
+                  key: BENTOML_DB_URI
+                  name: storage-secrets
+          - name: S3_ENDPOINT_URL
+            valueFrom:
+                secretKeyRef:
+                  key: S3_ENDPOINT_URL
+                  name: storage-secrets
+

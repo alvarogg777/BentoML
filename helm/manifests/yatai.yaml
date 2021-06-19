@@ -137,4 +137,22 @@ spec:
                 secretKeyRef:
                   key: S3_ENDPOINT_URL
                   name: storage-secrets
+          - name: PGPASSWORD
+            valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: storage-secrets
+          - name: PGUSER
+            valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_USER
+                  name: storage-secrets
+          - name: PGHOST
+            valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_HOST
+                  name: storage-secrets
+          - name: PGDATABASE
+            value: bentoml
+
 

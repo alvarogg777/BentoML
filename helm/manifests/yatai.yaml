@@ -120,7 +120,7 @@ spec:
           args:
             - "yatai-service-start"
             - "--repository-type=S3"
-            - "--db-url=$(BENTOML_DB_URI)"
+            - "--db-url=postgresql://$(PGUSER):$(PGPASSWORD)@$(PGHOST):5432/bentoml"
             - "--s3-url=s3://bentoml/artifacts"
             - "--s3-endpoint-url=$(S3_ENDPOINT_URL)"
           #envFrom:

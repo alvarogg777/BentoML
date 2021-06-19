@@ -100,10 +100,9 @@ spec:
           command:
             - "/usr/local/bin/bentoml"
           args:
-            # - "--db-url=$(BENTOML_DB_URI)"
             - "yatai-service-start"
-            - "--db-url=https://minio.storage.svc.local.cluster:9000"
             - "--repository-type=S3"
+            - "--db-url=$(BENTOML_DB_URI)"
             - "--s3-url=s3://bentoml/artifacts"
             - "--s3-endpoint-url=$(S3_ENDPOINT_URL)"
           envFrom:

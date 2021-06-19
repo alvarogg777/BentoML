@@ -127,11 +127,6 @@ spec:
           #  - secretRef:
           #      name: storage-secrets
           env:
-          - name: BENTOML_DB_URI
-            valueFrom:
-                secretKeyRef:
-                  key: BENTOML_DB_URI
-                  name: storage-secrets
           - name: S3_ENDPOINT_URL
             valueFrom:
                 secretKeyRef:

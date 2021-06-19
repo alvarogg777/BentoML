@@ -41,16 +41,28 @@ spec:
       - image: "docker.io/postgres:13.3"
         name: init-db
         command: ["createdb"]
-        args: ["-h","$(POSTGRES_HOST)", "-U", "$(POSTGRES_USER)", "bentoml" ]
-        envFrom:
-          - secretRef:
-              name: storage-secrets
+        # args: ["-h","$(POSTGRES_HOST)", "-U", "$(POSTGRES_USER)", "bentoml" ]
         env:
-          - name: POSTGRES_PASSWORD
+          - name: PGPASSWORD
             valueFrom:
                 secretKeyRef:
                   key: POSTGRES_PASSWORD
                   name: storage-secrets
+          - name: PGUSER
+            valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_USER
+                  name: storage-secrets
+          - name: PGHOST
+            valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_HOST
+                  name: storage-secrets
+          - name: PGDATABASE
+            value: bentoml
+        #envFrom:
+        #  - secretRef:
+        #      name: storage-secrets
       imagePullSecrets:
         - name: regcred
       restartPolicy: OnFailure

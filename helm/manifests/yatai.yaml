@@ -45,6 +45,12 @@ spec:
         envFrom:
           - secretRef:
               name: storage-secrets
+        env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: storage-secrets
       imagePullSecrets:
         - name: regcred
       restartPolicy: OnFailure

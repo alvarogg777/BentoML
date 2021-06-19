@@ -38,7 +38,7 @@ spec:
         app: init-postgresdb
     spec:
       containers:
-      - image: "docker.io/postgresql:13.3"
+      - image: "docker.io/postgres:13.3"
         name: init-db
         command: ["createdb"]
         args: ["-h","$(POSTGRES_HOST)", "-U", "$(POSTGRES_USER)", "bentoml" ]

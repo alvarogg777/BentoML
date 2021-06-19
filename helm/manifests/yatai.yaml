@@ -29,17 +29,17 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: init-db
+  name: init-bento-db
 spec:
   template:
     metadata:
-      name:  init-db
+      name:  init-bento-db
       labels:
         app: init-postgresdb
     spec:
       containers:
       - image: "docker.io/postgres:13.3"
-        name: init-db
+        name: init-bento-db
         command: ["createdb"]
         # args: ["-h","$(POSTGRES_HOST)", "-U", "$(POSTGRES_USER)", "bentoml" ]
         env:

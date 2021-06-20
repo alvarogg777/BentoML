@@ -23,6 +23,9 @@ spec:
   - name: grpc
     port: 50051
     targetPort: 50051
+  - name: jupyter
+    port: 8888
+    targetPort: 8888
   selector:
     app: yatai-service
 ---
@@ -103,6 +106,7 @@ spec:
           ports:
           - containerPort: 50051
           - containerPort: 3000
+          - containerPort: 8888
           livenessProbe:
             httpGet:
               path: /

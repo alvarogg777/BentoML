@@ -120,7 +120,7 @@ spec:
             initialDelaySeconds: 3
             periodSeconds: 5
           command:
-            - "/usr/local/bin/bentoml"
+            - "bentoml"
           args:
             - "yatai-service-start"
             - "--repository-type=S3"

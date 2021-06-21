@@ -34,6 +34,7 @@ kind: Job
 metadata:
   name: init-bento-db
 spec:
+  backoffLimit: 12
   template:
     metadata:
       name:  init-bento-db

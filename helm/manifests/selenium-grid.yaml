@@ -224,7 +224,7 @@ spec:
         - name: regcred
       containers:
         - name: selenium-chrome-node
-          image: selenium/node-chromium:4.0.0
+          image: selenium/node-chrome:4.0.0
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:

@@ -55,7 +55,7 @@ spec:
         - name: regcred
       containers:
         - name: mlflow
-          image: "atcommons/mlflow-server:1.18.0"
+          image: "alvarogg777/mlflow:latest"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

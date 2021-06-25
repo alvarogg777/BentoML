@@ -102,7 +102,7 @@ spec:
       serviceAccountName: yatai-service-account
       containers:
         - name: yatai-service
-          image: "bentoml/yatai-service:0.8.5"
+          image: "bentoml/yatai-service:latest"
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 50051

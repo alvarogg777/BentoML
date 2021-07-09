@@ -55,7 +55,7 @@ spec:
         - name: regcred
       containers:
         - name: mlflow
-          image: "alvarogg777/mlflow:latest"
+          image: "alvarogg777/rapids:latest"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

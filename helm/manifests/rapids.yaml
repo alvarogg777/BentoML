@@ -24,8 +24,8 @@ spec:
     port: 8787
     targetPort: 8787
   - name: nvidia
-    port: 8686
-    targetPort: 8686
+    port: 8786
+    targetPort: 8786
   - name: mlflow
     port: 5000
     targetPort: 5000
@@ -68,7 +68,7 @@ spec:
           - containerPort: 3000
           - containerPort: 8888
           - containerPort: 8787
-          - containerPort: 8686
+          - containerPort: 8786
           - containerPort: 5000
           livenessProbe:
             httpGet:

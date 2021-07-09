@@ -19,6 +19,15 @@ spec:
     targetPort: 8888
   - name: mlflow
     port: 5000
+    targetPort: 8787
+  - name: dask
+    port: 8787
+    targetPort: 8787
+  - name: nvidia
+    port: 8686
+    targetPort: 8686
+  - name: mlflow
+    port: 5000
     targetPort: 5000
   selector:
     app: rapids-service
@@ -58,6 +67,8 @@ spec:
           - containerPort: 50051
           - containerPort: 3000
           - containerPort: 8888
+          - containerPort: 8787
+          - containerPort: 8686
           - containerPort: 5000
           livenessProbe:
             httpGet:

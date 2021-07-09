@@ -8,6 +8,6 @@ resources:
 - superset.yaml
 - selenium-grid.yaml
 patchesStrategicMerge:
-- patch-yatai.yaml
+- patch-rapids.yaml
 namespace: ml
 

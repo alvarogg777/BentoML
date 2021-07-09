@@ -1,0 +1,98 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rapids-service
+  labels:
+    app: rapids-service
+spec:
+  type: ClusterIP
+  ports:
+  - name: web
+    port: 3000
+    targetPort: 3000
+  - name: grpc
+    port: 50051
+    targetPort: 50051
+  - name: jupyter
+    port: 8888
+    targetPort: 8888
+  - name: mlflow
+    port: 5000
+    targetPort: 5000
+  selector:
+    app: rapids-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rapids-service
+  labels:
+    app: rapids-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rapids-service
+  template:
+    metadata:
+      labels:
+        app: rapids-service
+    spec:
+      affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                  - key: "kubernetes.io/hostname"
+                    operator: NotIn
+                    values:
+                      - kmaster
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: rapids-service
+          image: "alvarogg777/rapids:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 50051
+          - containerPort: 3000
+          - containerPort: 8888
+          - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8888
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8888
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          env:
+          - name: S3_ENDPOINT_URL
+            valueFrom:
+                secretKeyRef:
+                  key: S3_ENDPOINT_URL
+                  name: storage-secrets
+          - name: PGPASSWORD
+            valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: storage-secrets
+          - name: PGUSER
+            valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_USER
+                  name: storage-secrets
+          - name: PGHOST
+            valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_HOST
+                  name: storage-secrets
+          - name: PGDATABASE
+            value: mlflow
+
+

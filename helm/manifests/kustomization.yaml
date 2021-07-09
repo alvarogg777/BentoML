@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 - regcred.yaml
 - authsecrets.yaml
-- yatai.yaml
+- rapids.yaml
 - mlflow.yaml
 - superset.yaml
 - selenium-grid.yaml

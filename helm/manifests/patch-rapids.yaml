@@ -1,16 +1,15 @@
 ---
-# Source: YataiService/templates/yatai-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: yatai-service
+  name: rapids-service
 spec:
   type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: yatai-service
+  name: rapids-service
 spec:
   template:
     spec:

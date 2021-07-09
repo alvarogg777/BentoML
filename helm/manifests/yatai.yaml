@@ -26,6 +26,9 @@ spec:
   - name: jupyter
     port: 8888
     targetPort: 8888
+  - name: mlflow
+    port: 5000
+    targetPort: 5000
   selector:
     app: yatai-service
 ---
@@ -108,6 +111,7 @@ spec:
           - containerPort: 50051
           - containerPort: 3000
           - containerPort: 8888
+          - containerPort: 5000
           livenessProbe:
             httpGet:
               path: /

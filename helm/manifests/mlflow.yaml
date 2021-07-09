@@ -16,6 +16,18 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: 8888
+      targetPort: jupyter
+      name: jupyter
+      protocol: TCP
+    - port: 3000
+      targetPort: yatai
+      name: yatai
+      protocol: TCP
+    - port: 8050
+      targetPort: web
+      name: web
+      protocol: TCP
   selector:
     app.kubernetes.io/name: mlflow
     app.kubernetes.io/instance: mlflow
@@ -60,6 +72,15 @@ spec:
           ports:
             - name: http
               containerPort: 5000
+              protocol: TCP
+            - name: jupyter
+              containerPort: 8888
+              protocol: TCP
+            - name: yatai
+              containerPort: 3000
+              protocol: TCP
+            - name: web
+              containerPort: 8050
               protocol: TCP
           command:
             - "mlflow"

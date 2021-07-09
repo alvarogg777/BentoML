@@ -71,18 +71,18 @@ spec:
           - containerPort: 8787
           - containerPort: 8786
           - containerPort: 5000
-          #livenessProbe:
-          #  httpGet:
-          #    path: /
-          #    port: 8888
-          #  initialDelaySeconds: 10
-          #  periodSeconds: 5
-          #readinessProbe:
-          #  httpGet:
-          #    path: /
-          #    port: 8888
-          #  initialDelaySeconds: 10
-          #  periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8888
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8888
+            initialDelaySeconds: 10
+            periodSeconds: 5
           env:
           - name: S3_ENDPOINT_URL
             valueFrom:

@@ -63,8 +63,7 @@ spec:
         - name: rapids-service
           image: "alvarogg777/rapids:latest"
           imagePullPolicy: IfNotPresent
-          command:
-            - tail -F /dev/null
+          tty: true
           ports:
           - containerPort: 50051
           - containerPort: 3000

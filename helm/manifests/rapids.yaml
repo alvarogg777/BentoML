@@ -61,7 +61,7 @@ spec:
         - name: regcred
       containers:
         - name: rapids-service
-          image: alvarogg777/rapids:21.06-cuda11.0-runtime-ubuntu20.04
+          image: alvarogg777/rapidsai:21.06-cuda11.0-runtime-ubuntu20.04
           imagePullPolicy: IfNotPresent
           tty: true
           ports:

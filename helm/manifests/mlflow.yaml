@@ -67,7 +67,7 @@ spec:
         - name: regcred
       containers:
         - name: mlflow
-          image: "alvarogg777/rapids:latest"
+          image: "alvarogg777/rapidsai:21.06-cuda11.2-runtime-ubuntu20.04"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

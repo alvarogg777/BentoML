@@ -15,3 +15,8 @@ spec:
     spec:
       imagePullSecrets:
         - name: regcred
+      containers:
+        - name: rapids-service
+          env:
+            - name: TZ
+              value: Europe/Madrid

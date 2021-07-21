@@ -47,6 +47,8 @@ spec:
         name: create-superset-db
         command: ["createdb"]
         env:
+          - name: TZ
+            value: Europe/Madrid
           - name: PGPASSWORD
             valueFrom:
                 secretKeyRef:

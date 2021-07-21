@@ -89,40 +89,42 @@ spec:
             - "--backend-store-uri=postgresql://$(PGUSER):$(PGPASSWORD)@$(PGHOST):5432/mlflow"
             - "--default-artifact-root=$(DEFAULT_ARTIFACT_ROOT)"
           env:
-          - name: PGPASSWORD             
-            valueFrom:        
-                secretKeyRef:  
-                  key: POSTGRES_PASSWORD  
-                  name: storage-secrets   
-          - name: PGUSER                 
-            valueFrom:    
-                secretKeyRef:  
-                  key: POSTGRES_USER  
-                  name: storage-secrets  
-          - name: PGHOST                 
-            valueFrom:    
-                secretKeyRef:  
-                  key: POSTGRES_HOST  
-                  name: storage-secrets  
-          - name: PGDATABASE             
-            value: bentoml  
-          - name: DEFAULT_ARTIFACT_ROOT
-            value: s3://mlflow/artifacts
-          - name: MLFLOW_S3_ENDPOINT_URL
-            valueFrom:
-              secretKeyRef:
-                name: storage-secrets
-                key: S3_ENDPOINT_URL
-          - name: AWS_ACCESS_KEY_ID
-            valueFrom:
-              secretKeyRef:
-                name: storage-secrets
-                key: MINIO_ACCESS_KEY
-          - name: AWS_SECRET_ACCESS_KEY
-            valueFrom:
-              secretKeyRef:
-                name: storage-secrets
-                key: MINIO_SECRET_KEY
+            - name: TZ
+              value: Europe/Madrid
+            - name: PGPASSWORD             
+              valueFrom:        
+                  secretKeyRef:  
+                    key: POSTGRES_PASSWORD  
+                    name: storage-secrets   
+            - name: PGUSER                 
+              valueFrom:    
+                  secretKeyRef:  
+                    key: POSTGRES_USER  
+                    name: storage-secrets  
+            - name: PGHOST                 
+              valueFrom:    
+                  secretKeyRef:  
+                    key: POSTGRES_HOST  
+                    name: storage-secrets  
+            - name: PGDATABASE             
+              value: bentoml  
+            - name: DEFAULT_ARTIFACT_ROOT
+              value: s3://mlflow/artifacts
+            - name: MLFLOW_S3_ENDPOINT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secrets
+                  key: S3_ENDPOINT_URL
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secrets
+                  key: MINIO_ACCESS_KEY
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secrets
+                  key: MINIO_SECRET_KEY
           #livenessProbe:
           #  httpGet:
           #    path: /health

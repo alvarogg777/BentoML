@@ -226,6 +226,9 @@ spec:
         - name: selenium-chrome-node
           image: alvarogg777/node-chromium:4.0.0-beta-4-20210627
           imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: Europe/Madrid
           envFrom:
             - configMapRef:
                 name: selenium-event-bus-config
@@ -275,6 +278,8 @@ spec:
           image: alvarogg777/distributor:4.0.0-beta-4-20210627
           imagePullPolicy: IfNotPresent
           env:
+            - name: TZ   
+              value: Europe/Madrid
             - name: SE_SESSIONS_MAP_HOST
               value: selenium-session-map
             - name: SE_SESSIONS_MAP_PORT
@@ -325,6 +330,9 @@ spec:
               protocol: TCP
             - containerPort: 4443
               protocol: TCP
+          env:
+            - name: TZ   
+              value: Europe/Madrid
 ---
 # Source: selenium-grid/templates/firefox-node-deployment.yaml
 apiVersion: apps/v1
@@ -356,6 +364,9 @@ spec:
         - name: selenium-firefox-node
           image: alvarogg777/node-firefox:4.0.0-beta-4-20210627
           imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ   
+              value: Europe/Madrid
           envFrom:
             - configMapRef:
                 name: selenium-event-bus-config
@@ -405,6 +416,8 @@ spec:
           image: alvarogg777/router:4.0.0-beta-4-20210627
           imagePullPolicy: IfNotPresent
           env:
+            - name: TZ   
+              value: Europe/Madrid
             - name: SE_DISTRIBUTOR_HOST
               value: selenium-distributor
             - name: SE_DISTRIBUTOR_PORT
@@ -467,6 +480,9 @@ spec:
         - name: selenium-session-map
           image: alvarogg777/sessions:4.0.0-beta-4-20210627
           imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ   
+              value: Europe/Madrid
           envFrom:
             - configMapRef:
                 name: selenium-event-bus-config
@@ -502,6 +518,9 @@ spec:
         - name: selenium-session-queuer
           image: alvarogg777/session-queue:4.0.0-beta-4-20210627
           imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ   
+              value: Europe/Madrid
           envFrom:
             - configMapRef:
                 name: selenium-event-bus-config

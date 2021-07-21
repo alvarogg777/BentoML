@@ -19,3 +19,6 @@ spec:
       containers:
         - name: yatai-service
           image: alvarogg777/arm64v8:nvidia-l4t-base-32.5.1
+          env:
+            - name: TZ
+              value: Europe/Madrid

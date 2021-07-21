@@ -53,6 +53,8 @@ spec:
         command: ["createdb"]
         # args: ["-h","$(POSTGRES_HOST)", "-U", "$(POSTGRES_USER)", "bentoml" ]
         env:
+          - name: TZ   
+            value: Europe/Madrid
           - name: PGPASSWORD
             valueFrom:
                 secretKeyRef:
@@ -140,6 +142,8 @@ spec:
           #  - secretRef:
           #      name: storage-secrets
           env:
+            - name: TZ   
+              value: Europe/Madrid
           - name: S3_ENDPOINT_URL
             valueFrom:
                 secretKeyRef:

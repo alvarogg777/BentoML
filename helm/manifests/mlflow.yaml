@@ -110,7 +110,7 @@ spec:
             - name: PGDATABASE             
               value: bentoml  
             - name: DEFAULT_ARTIFACT_ROOT
-              value: s3://mlflow/artifacts
+              value: s3://accuayto
             - name: MLFLOW_S3_ENDPOINT_URL
               valueFrom:
                 secretKeyRef:

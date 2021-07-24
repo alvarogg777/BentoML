@@ -92,6 +92,8 @@ spec:
           env:
             - name: TZ
               value: Europe/Madrid
+            - name: MLFLOW_S3_IGNORE_TLS
+              value: "true"
             - name: PGPASSWORD             
               valueFrom:        
                   secretKeyRef:  

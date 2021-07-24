@@ -86,6 +86,7 @@ spec:
             - "mlflow"
           args:
             - "server"
+            - "--host=0.0.0.0"
             - "--backend-store-uri=postgresql://$(PGUSER):$(PGPASSWORD)@$(PGHOST):5432/mlflow"
             - "--default-artifact-root=$(DEFAULT_ARTIFACT_ROOT)"
           env:

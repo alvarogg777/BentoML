@@ -716,3 +716,21 @@ spec:
           secret:
             secretName: superset-config
       restartPolicy: Never
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: superset-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`superset.k3d.io`)
+      kind: Rule
+      services:
+        - name: superset
+          port: 8088
+  tls:
+    certResolver: default
+    options: {}
+

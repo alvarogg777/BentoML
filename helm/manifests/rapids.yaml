@@ -110,7 +110,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: argocd-server-ingress
+  name: jupyter-ingress
 spec:
   entryPoints:
     - websecure

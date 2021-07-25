@@ -106,5 +106,22 @@ spec:
                   name: storage-secrets
           - name: PGDATABASE
             value: mlflow
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: argocd-server-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`jupyter.k3d.io`)
+      kind: Rule
+      services:
+        - name: rapids-service
+          port: 8888
+  tls:
+    certResolver: default
+    options: {}
 
 

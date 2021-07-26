@@ -111,7 +111,7 @@ spec:
                 secretKeyRef:
                   key: MINIO_ACCESS_KEY
                   name: storage-secrets
-          - name: AWS_ACCESS_KEY_ID
+          - name: AWS_SECRET_ACCESS_KEY
             valueFrom:
                 secretKeyRef:
                   key: MINIO_SECRET_KEY

@@ -88,7 +88,7 @@ spec:
             value: Europe/Madrid
           #- name: MLFLOW_S3_IGNORE_TLS
           #  value: "true"
-          - name: S3_ENDPOINT_URL
+          - name: MLFLOW_S3_ENDPOINT_URL
             valueFrom:
                 secretKeyRef:
                   key: S3_ENDPOINT_URL

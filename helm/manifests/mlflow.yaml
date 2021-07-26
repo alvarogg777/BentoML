@@ -149,14 +149,10 @@ metadata:
 spec:
   entryPoints:
     - web
-    - websecure
   routes:
     - match: Host(`mlflow.k3d.io`)
       kind: Rule
       services:
         - name: mlflow
           port: 5000
-  tls:
-    certResolver: default
-    options: {}
 

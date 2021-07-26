@@ -92,8 +92,8 @@ spec:
           env:
             - name: TZ
               value: Europe/Madrid
-            - name: MLFLOW_S3_IGNORE_TLS
-              value: "true"
+            #- name: MLFLOW_S3_IGNORE_TLS
+            #  value: "true"
             - name: PGPASSWORD             
               valueFrom:        
                   secretKeyRef:  
@@ -112,7 +112,7 @@ spec:
             - name: PGDATABASE             
               value: bentoml  
             - name: DEFAULT_ARTIFACT_ROOT
-              value: s3://accuayto
+              value: s3://mlflow
             - name: MLFLOW_S3_ENDPOINT_URL
               valueFrom:
                 secretKeyRef:
@@ -121,13 +121,13 @@ spec:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: storage-secrets
                   key: MINIO_ACCESS_KEY
+                  name: storage-secrets
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: storage-secrets
                   key: MINIO_SECRET_KEY
+                  name: storage-secrets
           #livenessProbe:
           #  httpGet:
           #    path: /health

@@ -166,5 +166,12 @@ spec:
                   name: storage-secrets
           - name: PGDATABASE
             value: bentoml
-
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef: MINIO_ACCESS_KEY
+              name: storage-secrets
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef: MINIO_SECRET_KEY
+              name: storage-secrets
 

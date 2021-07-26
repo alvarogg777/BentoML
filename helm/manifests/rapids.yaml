@@ -106,6 +106,17 @@ spec:
                   name: storage-secrets
           - name: PGDATABASE
             value: mlflow
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+                secretKeyRef:
+                  key: MINIO_ACCESS_KEY
+                  name: storage-secrets
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+                secretKeyRef:
+                  key: MINIO_SECRET_KEY
+                  name: storage-secrets
+
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute

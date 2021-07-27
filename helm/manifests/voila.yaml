@@ -15,6 +15,9 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: 8888
+      targetPort: 8888
+      name: jupyter
   selector:
     app.kubernetes.io/name: voila
     app.kubernetes.io/instance: voila

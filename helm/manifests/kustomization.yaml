@@ -7,6 +7,7 @@ resources:
 - mlflow.yaml
 - superset.yaml
 - selenium-grid.yaml
+- yatai.yaml
 patchesStrategicMerge:
 - patch-rapids.yaml
 namespace: ml

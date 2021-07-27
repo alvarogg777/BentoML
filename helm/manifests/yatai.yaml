@@ -146,34 +146,36 @@ spec:
               value: Europe/Madrid
             - name: S3_ENDPOINT_URL
               valueFrom:
-                  secretKeyRef:
-                    key: S3_ENDPOINT_URL
-                    name: storage-secrets
+                secretKeyRef:
+                  key: S3_ENDPOINT_URL
+                  name: storage-secrets
             - name: PGPASSWORD
               valueFrom:
-                  secretKeyRef:
-                    key: POSTGRES_PASSWORD
-                    name: storage-secrets
+                secretKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: storage-secrets
             - name: PGUSER
               valueFrom:
-                  secretKeyRef:
-                    key: POSTGRES_USER
-                    name: storage-secrets
+                secretKeyRef:
+                  key: POSTGRES_USER
+                  name: storage-secrets
             - name: PGHOST
               valueFrom:
-                  secretKeyRef:
-                    key: POSTGRES_HOST
-                    name: storage-secrets
+                secretKeyRef:
+                  key: POSTGRES_HOST
+                  name: storage-secrets
             - name: PGDATABASE
               value: bentoml
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
-                secretKeyRef: MINIO_ACCESS_KEY
-                name: storage-secrets
+                secretKeyRef: 
+                  key: MINIO_ACCESS_KEY
+                  name: storage-secrets
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
-                secretKeyRef: MINIO_SECRET_KEY
-                name: storage-secrets
+                secretKeyRef: 
+                  key: MINIO_SECRET_KEY
+                  name: storage-secrets
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute

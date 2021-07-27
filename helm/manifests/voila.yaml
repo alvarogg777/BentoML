@@ -1,0 +1,136 @@
+---
+# Source: voila/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: voila-service
+  labels:
+    app.kubernetes.io/name: voila
+    helm.sh/chart: voila-1.4.0
+    app.kubernetes.io/instance: voila
+    app.kubernetes.io/managed-by: Helm
+spec:
+  ports:
+    - port: 8866
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: voila
+    app.kubernetes.io/instance: voila
+---
+# Source: voila/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voila
+  labels:
+    app.kubernetes.io/name: voila
+    helm.sh/chart: voila-1.4.0
+    app.kubernetes.io/instance: voila
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: voila
+      app.kubernetes.io/instance: voila
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: voila
+        app.kubernetes.io/instance: voila
+    spec: 
+      affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                  - key: "kubernetes.io/hostname"
+                    operator: NotIn
+                    values:
+                      - kmaster
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: voila
+          image: alvarogg777/rapidsai:21.06-cuda11.2-runtime-ubuntu20.04-py3.8
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8866
+              protocol: TCP
+          command:
+            - "voila"
+          args:
+            - "--port=8866"
+            - "--no-browser"
+          env:
+            - name: TZ
+              value: Europe/Madrid
+            - name: MLFLOW_S3_IGNORE_TLS
+              value: "true"
+            - name: PGPASSWORD             
+              valueFrom:        
+                secretKeyRef:  
+                  key: POSTGRES_PASSWORD  
+                  name: storage-secrets   
+            - name: PGUSER                 
+              valueFrom:    
+                secretKeyRef:  
+                  key: POSTGRES_USER  
+                  name: storage-secrets  
+            - name: PGHOST                 
+              valueFrom:    
+                secretKeyRef:  
+                  key: POSTGRES_HOST  
+                  name: storage-secrets  
+            - name: PGDATABASE             
+              value: bentoml  
+            - name: DEFAULT_ARTIFACT_ROOT
+              value: s3://accuayto
+            - name: MLFLOW_S3_ENDPOINT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secrets
+                  key: S3_ENDPOINT_URL
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secrets
+                  key: MINIO_ACCESS_KEY
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secrets
+                  key: MINIO_SECRET_KEY
+          #livenessProbe:
+          #  httpGet:
+          #    path: /health
+          #    port: http
+          #readinessProbe:
+          #  httpGet:
+          #    path: /health
+          #    port: http
+          resources:
+            {}
+          # volumeMounts:
+          #   - mountPath: "/export"
+          #     name: minio
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: voila-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`voila.k3d.io`)
+      kind: Rule
+      services:
+        - name: voila-service
+          port: 8888
+  tls:
+    certResolver: default
+    options: {}

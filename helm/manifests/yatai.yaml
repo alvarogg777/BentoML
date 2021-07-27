@@ -96,15 +96,15 @@ spec:
       labels:
         app: yatai-service
     spec:
-      affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                  - key: "kubernetes.io/hostname"
-                    operator: NotIn
-                    values:
-                      - kmaster
+      # affinity:
+      #   nodeAffinity:
+      #       requiredDuringSchedulingIgnoredDuringExecution:
+      #         nodeSelectorTerms:
+      #           - matchExpressions:
+      #             - key: "kubernetes.io/hostname"
+      #               operator: NotIn
+      #               values:
+      #                 - kmaster
       imagePullSecrets:
         - name: regcred
       serviceAccountName: yatai-service-account
@@ -144,34 +144,59 @@ spec:
           env:
             - name: TZ   
               value: Europe/Madrid
-          - name: S3_ENDPOINT_URL
-            valueFrom:
+            - name: S3_ENDPOINT_URL
+              valueFrom:
                 secretKeyRef:
                   key: S3_ENDPOINT_URL
                   name: storage-secrets
-          - name: PGPASSWORD
-            valueFrom:
+            - name: PGPASSWORD
+              valueFrom:
                 secretKeyRef:
                   key: POSTGRES_PASSWORD
                   name: storage-secrets
-          - name: PGUSER
-            valueFrom:
+            - name: PGUSER
+              valueFrom:
                 secretKeyRef:
                   key: POSTGRES_USER
                   name: storage-secrets
-          - name: PGHOST
-            valueFrom:
+            - name: PGHOST
+              valueFrom:
                 secretKeyRef:
                   key: POSTGRES_HOST
                   name: storage-secrets
-          - name: PGDATABASE
-            value: bentoml
-          - name: AWS_ACCESS_KEY_ID
-            valueFrom:
-              secretKeyRef: MINIO_ACCESS_KEY
-              name: storage-secrets
-          - name: AWS_SECRET_ACCESS_KEY
-            valueFrom:
-              secretKeyRef: MINIO_SECRET_KEY
-              name: storage-secrets
-
+            - name: PGDATABASE
+              value: bentoml
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef: 
+                  key: MINIO_ACCESS_KEY
+                  name: storage-secrets
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef: 
+                  key: MINIO_SECRET_KEY
+                  name: storage-secrets
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: yatai-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`yatai.k3d.io`)
+      kind: Rule
+      services:
+        - name: yatai-service
+          port: 3000
+    - kind: Rule
+      match: Host(`yatai.k3d.io`) && Headers(`Content-Type`, `application/grpc`)
+      priority: 11
+      services:
+      - name: yatai-service
+        port: 50051
+        scheme: h2c
+  tls:
+    certResolver: default
+    options: {}

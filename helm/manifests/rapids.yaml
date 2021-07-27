@@ -138,28 +138,4 @@ spec:
   tls:
     certResolver: default
     options: {}
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: yatai-ingress
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`yatai.k3d.io`)
-      kind: Rule
-      services:
-        - name: rapids-service
-          port: 3000
-    - kind: Rule
-      match: Host(`yatai.k3d.io`) && Headers(`Content-Type`, `application/grpc`)
-      priority: 11
-      services:
-      - name: rapids-service
-        port: 50051
-        scheme: h2c
-  tls:
-    certResolver: default
-    options: {}
 

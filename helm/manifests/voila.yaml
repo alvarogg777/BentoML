@@ -130,7 +130,7 @@ spec:
       kind: Rule
       services:
         - name: voila-service
-          port: 8888
+          port: 8866
   tls:
     certResolver: default
     options: {}

@@ -41,15 +41,6 @@ spec:
         app.kubernetes.io/name: voila
         app.kubernetes.io/instance: voila
     spec: 
-      affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                  - key: "kubernetes.io/hostname"
-                    operator: NotIn
-                    values:
-                      - kmaster
       imagePullSecrets:
         - name: regcred
       containers:
@@ -130,7 +121,7 @@ spec:
       kind: Rule
       services:
         - name: voila-service
-          port: 8888
+          port: 8866
   tls:
     certResolver: default
     options: {}

@@ -15,6 +15,15 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - name: jupyter
+      port: 8888
+      targetPort: 8888
+    - name: dask
+      port: 8787
+      targetPort: 8787
+    - name: nvidia
+      port: 8786
+      targetPort: 8786
   selector:
     app.kubernetes.io/name: voila
     app.kubernetes.io/instance: voila

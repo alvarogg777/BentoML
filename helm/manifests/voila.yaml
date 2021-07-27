@@ -60,6 +60,9 @@ spec:
             - name: http
               containerPort: 8866
               protocol: TCP
+            - containerPort: 8888
+            - containerPort: 8787
+            - containerPort: 8786
           command:
             - "voila"
           args:

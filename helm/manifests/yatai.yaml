@@ -96,15 +96,15 @@ spec:
       labels:
         app: yatai-service
     spec:
-      # affinity:
-      #   nodeAffinity:
-      #       requiredDuringSchedulingIgnoredDuringExecution:
-      #         nodeSelectorTerms:
-      #           - matchExpressions:
-      #             - key: "kubernetes.io/hostname"
-      #               operator: NotIn
-      #               values:
-      #                 - kmaster
+      affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                  - key: "kubernetes.io/hostname"
+                    operator: NotIn
+                    values:
+                      - kpi4
       imagePullSecrets:
         - name: regcred
       serviceAccountName: yatai-service-account

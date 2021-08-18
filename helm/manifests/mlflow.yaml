@@ -60,7 +60,7 @@ spec:
       containers:
         - name: mlflow
           image: "alvarogg777/rapidsai:21.06-cuda11.2-runtime-ubuntu20.04-py3.8"
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - name: http
               containerPort: 5000

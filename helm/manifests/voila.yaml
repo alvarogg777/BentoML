@@ -56,7 +56,7 @@ spec:
       containers:
         - name: voila
           image: alvarogg777/rapidsai:21.06-cuda11.2-runtime-ubuntu20.04-py3.8
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8866

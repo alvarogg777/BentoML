@@ -36,6 +36,7 @@ metadata:
   labels:
     app: rapids-service
 spec:
+  progressDeadlineSeconds: 1200
   replicas: 1
   selector:
     matchLabels:
@@ -45,21 +46,12 @@ spec:
       labels:
         app: rapids-service
     spec:
-      affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                  - key: "kubernetes.io/hostname"
-                    operator: NotIn
-                    values:
-                      - kmaster
       imagePullSecrets:
         - name: regcred
       containers:
         - name: rapids-service
           image: alvarogg777/rapidsai:21.06-cuda11.2-runtime-ubuntu20.04-py3.8
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           tty: true
           ports:
           - containerPort: 50051

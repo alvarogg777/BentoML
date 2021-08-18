@@ -43,6 +43,7 @@ metadata:
     app.kubernetes.io/instance: mlflow
     app.kubernetes.io/managed-by: Helm
 spec:
+  progressDeadlineSeconds: 1200
   replicas: 1
   selector:
     matchLabels:
@@ -54,15 +55,6 @@ spec:
         app.kubernetes.io/name: mlflow
         app.kubernetes.io/instance: mlflow
     spec: 
-      affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                  - key: "kubernetes.io/hostname"
-                    operator: NotIn
-                    values:
-                      - kmaster
       imagePullSecrets:
         - name: regcred
       containers:

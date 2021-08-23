@@ -111,7 +111,7 @@ spec:
       serviceAccountName: yatai-service-account
       containers:
         - name: yatai-service
-          image: alvarogg777/rapidsai:21.06-cuda11.2-runtime-ubuntu20.04-py3.8 # "bentoml/yatai-service:0.8.5"
+          image: alvarogg777/rapidsai:21.08-cuda11.2-runtime-ubuntu20.04-py3.8 # "bentoml/yatai-service:0.8.5"
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 50051

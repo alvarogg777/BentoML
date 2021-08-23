@@ -5,8 +5,8 @@ resources:
 - authsecrets.yaml
 - yatai.yaml
 - voila.yaml
-- https://raw.githubusercontent.com/alvarogg777/helm-mlflow/patch-1.13.1/manifests/mlflow.yaml
-- https://raw.githubusercontent.com/alvarogg777/superset/patch-1.2/helm/superset/manifests/superset.yaml
+- github.com/alvarogg777/helm-mlflow//manifests/mlflow.yaml?ref=patch-1.19.0
+- github.com/alvarogg777/superset//helm/superset/manifests/superset.yaml?ref=patch-1.2
 patchesStrategicMerge:
 - patch-yatai.yaml
 namespace: ml

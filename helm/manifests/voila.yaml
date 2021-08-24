@@ -53,6 +53,7 @@ spec:
                     operator: NotIn
                     values:
                       - kpi4
+                      - knode1
       imagePullSecrets:
         - name: regcred
       containers:

@@ -3,13 +3,13 @@ kind: Kustomization
 resources:
 - regcred.yaml
 - authsecrets.yaml
-#- rapids.yaml
+- rapids.yaml
 - mlflow.yaml
 - superset.yaml
 - selenium-grid.yaml
 #- yatai.yaml
 # - voila.yaml
-#patchesStrategicMerge:
-#- patch-rapids.yaml
+patchesStrategicMerge:
+- patch-rapids.yaml
 namespace: ml
 

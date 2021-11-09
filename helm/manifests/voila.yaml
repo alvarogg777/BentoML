@@ -6,7 +6,7 @@ metadata:
   name: voila-service
   labels:
     app.kubernetes.io/name: voila
-    helm.sh/chart: voila-1.4.0
+    helm.sh/chart: voila-0.2.10
     app.kubernetes.io/instance: voila
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -29,7 +29,7 @@ metadata:
   name: voila
   labels:
     app.kubernetes.io/name: voila
-    helm.sh/chart: voila-1.4.0
+    helm.sh/chart: voila-0.2.10
     app.kubernetes.io/instance: voila
     app.kubernetes.io/managed-by: Helm
 spec:

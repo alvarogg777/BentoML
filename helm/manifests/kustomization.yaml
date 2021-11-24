@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 - regcred.yaml
 - authsecrets.yaml
-- yatai.yaml
+# - yatai.yaml
 - voila.yaml
 #- github.com/alvarogg777/helm-mlflow//manifests?ref=patch-1.19.0
 # - https://raw.githubusercontent.com/alvarogg777/superset/patch-1.2/helm/superset/manifests/superset.yaml # - github.com/alvarogg777/superset//helm/superset/manifests?ref=patch-1.2

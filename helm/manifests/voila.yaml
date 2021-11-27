@@ -58,7 +58,7 @@ spec:
         - name: regcred
       containers:
         - name: voila
-          image: alvarogg777/arm64v8:jp46-ml-clean
+          image: alvarogg777/arm64v8:jp46-ml
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

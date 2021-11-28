@@ -48,9 +48,10 @@ spec:
               nodeSelectorTerms:
                 - matchExpressions:
                   - key: "kubernetes.io/hostname"
-                    operator: NotIn
+                    operator: In
                     values:
-                      - kpi4
+                      - knode1
+                      - knode2
       imagePullSecrets:
         - name: regcred
       containers:

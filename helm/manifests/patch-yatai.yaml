@@ -18,7 +18,7 @@ spec:
         - name: regcred
       containers:
         - name: yatai-service
-          image: alvarogg777/arm64v8:jp46-ml
+          image: alvarogg777/arm64v8:jp46-ml-202112
           env:
             - name: TZ
               value: Europe/Madrid

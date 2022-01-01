@@ -11,6 +11,9 @@ metadata:
     app.kubernetes.io/managed-by: Helm
 spec:
   ports:
+    - port: 8050
+      targetPort: 8050
+      name: dash
     - port: 8866
       targetPort: http
       protocol: TCP
@@ -63,6 +66,9 @@ spec:
           ports:
             - name: http
               containerPort: 8866
+              protocol: TCP
+            - name: dash
+              containerPort: 8050
               protocol: TCP
           command:
             - "voila"

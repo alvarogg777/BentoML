@@ -140,14 +140,14 @@ spec:
   - host: voila.alboroto.live
     http:
       paths:
-      - path: /voila/
+      - path: /voila
         pathType: Prefix
         backend:
           service:
             name: voila-service
             port:
               name: voila
-      - path: /dash/
+      - path: /dash
         pathType: Prefix
         backend:
           service:
@@ -165,7 +165,7 @@ spec:
   - host: jupyter.alboroto.live
     http:
       paths:
-      - path: /lab/
+      - path: /lab
         pathType: Prefix
         backend:
           service:

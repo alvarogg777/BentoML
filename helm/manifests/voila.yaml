@@ -74,7 +74,7 @@ spec:
             - "voila"
           args:
             - "--enable_nbextensions=True"
-            - "--base_url=/voila/"
+            # - "--base_url=/voila/"
             - "--host=0.0.0.0"
             - "--port=8866"
             - "--no-browser"
@@ -164,7 +164,7 @@ spec:
     - web
     - websecure
   routes:
-    - match: Host(`voila.alboroto.live`) && PathPrefix(`/voila`)
+    - match: Host(`voila.alboroto.live`)
       kind: Rule
       services:
         - name: voila-service
@@ -178,7 +178,7 @@ spec:
           port: 8050
       #middlewares:
       #  - name: add-dash
-    - match: Host(`jupyter.alboroto.live`) && PathPrefix(`/lab`)
+    - match: Host(`jupyter.alboroto.live`)
       kind: Rule
       services:
         - name: voila-service

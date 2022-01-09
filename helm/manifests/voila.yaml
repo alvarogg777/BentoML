@@ -63,21 +63,14 @@ spec:
         - name: voila
           image: alvarogg777/arm64v8:jp46-ml-20220101
           imagePullPolicy: IfNotPresent
-          ports:
-            - name: voila
-              containerPort: 8866
-              protocol: TCP
-            - name: dash
-              containerPort: 8050
-              protocol: TCP
           command:
             - "voila"
           args:
             - "--enable_nbextensions=True"
-            # - "--base_url=/voila/"
             - "--host=0.0.0.0"
             - "--port=8866"
             - "--no-browser"
+            # - "--base_url=/voila/"
           env:
             - name: TZ
               value: Europe/Madrid
@@ -169,9 +162,9 @@ spec:
       services:
         - name: voila-service
           port: 8866
-      middlewares:
-        - name: add-voila
-    - match: Host(`voila.alboroto.live`) && PathPrefix(`/dash`)
+      # middlewares:
+      #   - name: add-voila
+    - match: Host(`dash.alboroto.live`) 
       kind: Rule
       services:
         - name: voila-service

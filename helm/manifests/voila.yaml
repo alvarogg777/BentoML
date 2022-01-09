@@ -137,7 +137,7 @@ metadata:
   name: add-voila
 spec:
   addPrefix:
-    prefix: /voila/
+    prefix: /voila
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -183,8 +183,8 @@ spec:
       services:
         - name: voila-service
           port: 8888
-      middlewares:
-       - name: add-lab
+      # middlewares:
+      #  - name: add-lab
   tls:
     secretName: alboroto-tls
 # ---

@@ -136,6 +136,10 @@ kind: Ingress
 metadata:
   name: voila-ingress
 spec:
+  tls:
+  - hosts:
+      - voila.alboroto.live
+    secretName: alboroto-tls
   rules:
   - host: voila.alboroto.live
     http:

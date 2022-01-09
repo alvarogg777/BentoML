@@ -164,27 +164,27 @@ spec:
     - web
     - websecure
   routes:
-    - match: Host(`voila.alboroto.live`)
+    - match: Host(`voila.alboroto.live`) && PathPrefix(`/voila`)
       kind: Rule
       services:
         - name: voila-service
           port: 8866
       middlewares:
         - name: add-voila
-    - match: Host(`voila.alboroto.live`)
+    - match: Host(`voila.alboroto.live`) && PathPrefix(`/dash`)
       kind: Rule
       services:
         - name: voila-service
-          port: 8866
-      middlewares:
-        - name: add-voila
-    - match: Host(`jupyter.alboroto.live`)
+          port: 8050
+      #middlewares:
+      #  - name: add-dash
+    - match: Host(`jupyter.alboroto.live`) && PathPrefix(`/lab`)
       kind: Rule
       services:
         - name: voila-service
           port: 8888
       middlewares:
-        - name: add-lab
+       - name: add-lab
   tls:
     secretName: alboroto-tls
 # ---

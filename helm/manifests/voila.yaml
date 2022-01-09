@@ -131,52 +131,109 @@ spec:
           #   - mountPath: "/export"
           #     name: minio
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: add-voila
+spec:
+  addPrefix:
+    prefix: /voila/
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: add-dash
+spec:
+  addPrefix:
+    prefix: /dash
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: add-lab
+spec:
+  addPrefix:
+    prefix: /lab
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: voila-ingress
 spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`voila.alboroto.live`)
+      kind: Rule
+      services:
+        - name: voila-service
+          port: 8866
+      middlewares:
+        - name: add-voila
+    - match: Host(`voila.alboroto.live`)
+      kind: Rule
+      services:
+        - name: voila-service
+          port: 8866
+      middlewares:
+        - name: add-voila
+    - match: Host(`jupyter.alboroto.live`)
+      kind: Rule
+      services:
+        - name: voila-service
+          port: 8888
+      middlewares:
+        - name: add-lab
   tls:
-  - hosts:
-      - voila.alboroto.live
     secretName: alboroto-tls
-  rules:
-  - host: voila.alboroto.live
-    http:
-      paths:
-      - path: /voila
-        pathType: Prefix
-        backend:
-          service:
-            name: voila-service
-            port:
-              name: voila
-      - path: /dash
-        pathType: Prefix
-        backend:
-          service:
-            name: voila-service
-            port:
-              name: dash
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: voila-ingress
+# spec:
+#   tls:
+#   - hosts:
+#       - voila.alboroto.live
+#     secretName: alboroto-tls
+#   rules:
+#   - host: voila.alboroto.live
+#     http:
+#       paths:
+#       - path: /
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: voila-service
+#             port:
+#               name: voila
+#       - path: /dash
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: voila-service
+#             port:
+#               name: dash
 
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: jupyter-ingress
-spec:
-  rules:
-  - host: jupyter.alboroto.live
-    http:
-      paths:
-      - path: /lab
-        pathType: Prefix
-        backend:
-          service:
-            name: voila-service
-            port:
-              number: 8888
-  #tls:
-  #  hosts:
-  #    - voila.alboroto.live
-  #  secretName: alboroto-tls
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: jupyter-ingress
+# spec:
+#   rules:
+#   - host: jupyter.alboroto.live
+#     http:
+#       paths:
+#       - path: /lab
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: voila-service
+#             port:
+#               number: 8888
+#   #tls:
+#   #  hosts:
+#   #    - voila.alboroto.live
+#   #  secretName: alboroto-tls

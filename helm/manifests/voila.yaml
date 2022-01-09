@@ -70,7 +70,7 @@ spec:
             - "--Voila.ip=0.0.0.0"
             - "--port=8866"
             - "--no-browser"
-            # - "--base_url=/voila/"
+            - "--base_url=/voila/"
           env:
             - name: TZ
               value: Europe/Madrid
@@ -164,13 +164,13 @@ spec:
           port: 8866
       # middlewares:
       #   - name: add-voila
-    - match: Host(`dash.alboroto.live`) 
+    - match: Host(`voila.alboroto.live`) # && PathPrefix(`/dash`)
       kind: Rule
       services:
         - name: voila-service
           port: 8050
-      #middlewares:
-      #  - name: add-dash
+      middlewares:
+       - name: add-dash
     - match: Host(`jupyter.alboroto.live`)
       kind: Rule
       services:

@@ -157,7 +157,7 @@ spec:
     - web
     - websecure
   routes:
-    - match: Host(`voila.alboroto.live`) && PathPrefix(`/voila`)
+    - match: Host(`voila.alboroto.live`) && PathPrefix(`/voila/`)
       kind: Rule
       services:
         - name: voila-service

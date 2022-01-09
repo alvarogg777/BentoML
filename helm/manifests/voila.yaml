@@ -144,7 +144,7 @@ spec:
   - host: voila.alboroto.live
     http:
       paths:
-      - path: /
+      - path: /voila
         pathType: Prefix
         backend:
           service:

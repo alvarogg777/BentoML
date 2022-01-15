@@ -111,7 +111,7 @@ spec:
       serviceAccountName: yatai-service-account
       containers:
         - name: yatai-service
-          image: alvarogg777/arm64v8:jp46-ml-20220101 # "bentoml/yatai-service:0.8.5"
+          image: alvarogg777/arm64v8:jp46-ml-20221501 # "bentoml/yatai-service:0.8.5"
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 50051

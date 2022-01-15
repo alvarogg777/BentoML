@@ -61,7 +61,7 @@ spec:
         - name: regcred
       containers:
         - name: voila
-          image: alvarogg777/arm64v8:jp46-ml-20220101
+          image: alvarogg777/arm64v8:jp46-ml-20221501
           imagePullPolicy: IfNotPresent
           command:
             - "voila"

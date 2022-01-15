@@ -138,17 +138,17 @@ spec:
             - "--repository-type=S3"
             - "--db-url=postgresql://$(PGUSER):$(PGPASSWORD)@$(PGHOST):5432/bentoml"
             - "--s3-url=s3://bentoml/artifacts"
-            - "--s3-endpoint-url=$(S3_ENDPOINT_URL)"
+            - "--s3-endpoint-url=$(MLFLOW_S3_ENDPOINT_URL)"
           #envFrom:
           #  - secretRef:
           #      name: storage-secrets
           env:
             - name: TZ   
               value: Europe/Madrid
-            - name: S3_ENDPOINT_URL
+            - name: MLFLOW_S3_ENDPOINT_URL
               valueFrom:
                 secretKeyRef:
-                  key: S3_ENDPOINT_URL
+                  key: MLFLOW_S3_ENDPOINT_URL
                   name: storage-secrets
             - name: PGPASSWORD
               valueFrom:

@@ -97,7 +97,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: storage-secrets
-                  key: S3_ENDPOINT_URL
+                  key: MLFLOW_S3_ENDPOINT_URL
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:

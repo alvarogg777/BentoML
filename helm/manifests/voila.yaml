@@ -157,21 +157,21 @@ spec:
     - web
     - websecure
   routes:
-    - match: Host(`voila.alboroto.live`) && PathPrefix(`/voila/`)
+    - match: Host(`voila.achlys.tech`) && PathPrefix(`/voila/`)
       kind: Rule
       services:
         - name: voila-service
           port: 8866
       # middlewares:
       #   - name: add-voila
-    - match: Host(`voila.alboroto.live`) && PathPrefix(`/dash`)
+    - match: Host(`voila.achlys.tech`) && PathPrefix(`/dash`)
       kind: Rule
       services:
         - name: voila-service
           port: 8050
       # middlewares:
       #  - name: add-dash
-    - match: Host(`jupyter.alboroto.live`)
+    - match: Host(`jupyter.achlys.tech`)
       kind: Rule
       services:
         - name: voila-service
@@ -188,10 +188,10 @@ spec:
 # spec:
 #   tls:
 #   - hosts:
-#       - voila.alboroto.live
+#       - voila.achlys.tech
 #     secretName: alboroto-tls
 #   rules:
-#   - host: voila.alboroto.live
+#   - host: voila.achlys.tech
 #     http:
 #       paths:
 #       - path: /
@@ -216,7 +216,7 @@ spec:
 #   name: jupyter-ingress
 # spec:
 #   rules:
-#   - host: jupyter.alboroto.live
+#   - host: jupyter.achlys.tech
 #     http:
 #       paths:
 #       - path: /lab
@@ -228,5 +228,5 @@ spec:
 #               number: 8888
 #   #tls:
 #   #  hosts:
-#   #    - voila.alboroto.live
+#   #    - voila.achlys.tech
 #   #  secretName: alboroto-tls

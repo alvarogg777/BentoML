@@ -128,22 +128,22 @@ metadata:
   name: mlflow-ingress
   annotations:
     kubernetes.io/ingress.class: traefik
-    # external-dns.alpha.kubernetes.io/hostname: mlflow.alboroto.live
+    # external-dns.alpha.kubernetes.io/hostname: mlflow.achlys.tech
     # external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     cert-manager.io/cluster-issuer: letsencrypt-stg
     traefik.frontend.passHostHeader: "true"
-    ingress.kubernetes.io/auth-url: http://authelia-service.istio-system.svc:80/api/verify?rd=https://auth.alboroto.live/
+    ingress.kubernetes.io/auth-url: http://authelia-service.istio-system.svc:80/api/verify?rd=https://auth.achlys.tech/
     traefik.ingress.kubernetes.io/router.middlewares: istio-system-authelia@kubernetescrd
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     # traefik.ingress.kubernetes.io/router.tls: "true"
     # traefik.ingress.kubernetes.io/router.tls.certresolver: cloudflare
 spec:
   tls:
-    - secretName: authelia-ingress-tls # alboroto.live
+    - secretName: authelia-ingress-tls # achlys.tech
       hosts:
-        - mlflow.alboroto.live
+        - mlflow.achlys.tech
   rules:
-    - host: mlflow.alboroto.live
+    - host: mlflow.achlys.tech
       http:
         paths:
           - path: /

@@ -179,7 +179,7 @@ spec:
       # middlewares:
       #  - name: add-lab
   tls:
-    secretName: alboroto-tls
+    secretName: achlys-tls
 # ---
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress

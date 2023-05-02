@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: voila-service
+  name: lab-service
   labels:
     app.kubernetes.io/name: voila
     helm.sh/chart: voila-0.2.10
@@ -20,7 +20,7 @@ spec:
       name: voila
     - port: 8888
       targetPort: 8888
-      name: jupyter
+      name: lab
   selector:
     app.kubernetes.io/name: voila
     app.kubernetes.io/instance: voila
@@ -29,7 +29,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: voila
+  name: lab
   labels:
     app.kubernetes.io/name: voila
     helm.sh/chart: voila-0.2.10
@@ -60,17 +60,25 @@ spec:
       imagePullSecrets:
         - name: regcred
       containers:
-        - name: voila
-          image: alvarogg777/arm64v8:jp50-ml-dp-1
+        - name: lab
+          # image: alvarogg777/arm64v8:jp50-ml-dp-1
+          image: alvarogg777/arm64v8:jp-5.2.1
           imagePullPolicy: IfNotPresent
+          # command:
+          #   - "voila"
+          # args:
+          #   - "--enable_nbextensions=True"
+          #   - "--Voila.ip=0.0.0.0"
+          #   - "--port=8866"
+          #   - "--no-browser"
+          #   - "--base_url=/voila"
           command:
-            - "voila"
+            - "jupyter"
           args:
-            - "--enable_nbextensions=True"
-            - "--Voila.ip=0.0.0.0"
-            - "--port=8866"
-            - "--no-browser"
-            - "--base_url=/voila/"
+            - "lab"
+            - "--ip"
+            - "0.0.0.0"
+            - "--allow-root"
           env:
             - name: TZ
               value: Europe/Madrid
@@ -110,71 +118,88 @@ spec:
                 secretKeyRef:
                   name: storage-secrets
                   key: MINIO_SECRET_KEY
-          #livenessProbe:
-          #  httpGet:
-          #    path: /health
-          #    port: http
-          #readinessProbe:
-          #  httpGet:
-          #    path: /health
-          #    port: http
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8888
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8888
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 8888
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 60
+          #   timeoutSeconds: 30
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 8888
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 5
           resources:
             {}
           # volumeMounts:
           #   - mountPath: "/export"
           #     name: minio
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: add-voila
-spec:
-  addPrefix:
-    prefix: /voila
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: add-dash
-spec:
-  addPrefix:
-    prefix: /dash
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: add-lab
-spec:
-  addPrefix:
-    prefix: /lab
----
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: add-voila
+# spec:
+#   addPrefix:
+#     prefix: /voila
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: add-dash
+# spec:
+#   addPrefix:
+#     prefix: /dash
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: add-lab
+# spec:
+#   addPrefix:
+#     prefix: /lab
+# ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: voila-ingress
+  name: lab-ingress
 spec:
   entryPoints:
     - web
     - websecure
   routes:
-    - match: Host(`voila.achlys.tech`) && PathPrefix(`/voila/`)
+    - match: Host(`lab.achlys.tech`) && PathPrefix(`/voila`)
       kind: Rule
       services:
-        - name: voila-service
+        - name: lab-service
           port: 8866
       # middlewares:
       #   - name: add-voila
-    - match: Host(`voila.achlys.tech`) && PathPrefix(`/dash`)
+    - match: Host(`lab.achlys.tech`) && PathPrefix(`/dash`)
       kind: Rule
       services:
-        - name: voila-service
+        - name: lab-service
           port: 8050
       # middlewares:
       #  - name: add-dash
-    - match: Host(`jupyter.achlys.tech`)
+    - match: Host(`lab.achlys.tech`)
       kind: Rule
       services:
-        - name: voila-service
+        - name: lab-service
           port: 8888
       # middlewares:
       #  - name: add-lab
